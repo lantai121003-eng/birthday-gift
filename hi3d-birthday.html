@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="给欣雨的神秘生日礼物：庆幸在人海和你相遇。">
+  <title>给欣雨的神秘礼物</title>
+  <link rel="icon" href="hi3d-star.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="hi3d-birthday.css?v=11">
+  <script src="hi3d-breath.js?v=2" defer></script>
+  <script src="hi3d-birthday.js?v=11" defer></script>
+</head>
+<body data-phase="welcome">
+  <div class="sky-glow" aria-hidden="true"></div>
+  <canvas id="universe" aria-label="神秘礼盒、粒子小鸭与生日蛋糕的三维互动场景"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" id="brand" aria-label="一份神秘礼物，回到开场">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 18h28v-7H6v7Zm2 0v17h24V18M20 11v24M20 11C6 13 9-3 17 5l3 6Zm0 0C34 13 31-3 23 5l-3 6Z"/></svg>
+      <span>一份神秘礼物<small>A LITTLE SURPRISE, JUST FOR YOU</small></span>
+    </a>
+    <div class="top-actions">
+      <button class="recipient" id="personalize" aria-label="修改收礼人和私人祝福"><span class="tiny-star">✧</span> 写给<span id="recipient-label">欣雨</span></button>
+      <span class="top-divider" aria-hidden="true"></span>
+      <button class="icon-button" id="sound" aria-label="关闭背景音乐" aria-pressed="true" title="背景音乐">
+        <svg id="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 5-5 4H3v6h3l5 4V5Z"/><path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></svg>
+        <svg id="sound-off" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="m11 5-5 4H3v6h3l5 4V5ZM16 9l6 6m0-6-6 6"/></svg>
+      </button>
+      <button class="icon-button" id="share" aria-label="分享生日礼物" title="分享礼物"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg></button>
+    </div>
+  </header>
+
+  <main id="experience">
+    <section class="story" id="story" aria-live="polite" aria-atomic="true">
+      <p class="eyebrow" id="eyebrow"><span></span> A LITTLE SURPRISE, JUST FOR YOU <span></span></p>
+      <h1 id="headline"><span data-recipient>欣雨</span>，<br><em>这份惊喜，只给你。</em></h1>
+      <p class="subtitle" id="subtitle">把想对你说的话，悄悄藏成了一份生日礼物。</p>
+    </section>
+
+    <div class="scene-space" id="scene-space" aria-label="触碰粒子礼盒，拆开神秘礼物"></div>
+
+    <div class="side-note left-note" aria-hidden="true"><span class="vertical-line"></span><span>A GIFT FOR LITTLE DUCK</span><span class="coordinate">MADE WITH LOVE · FOR YOU</span></div>
+    <div class="orbit-note" id="orbit-note" aria-hidden="true"><span class="note-line"></span><span>a little magic<br>is waiting for you <b>✧</b></span></div>
+    <div class="scene-caption" id="scene-caption" aria-hidden="true"><span class="caption-line"></span><span>星光做的蛋糕 / 只此一份</span></div>
+
+    <section class="letter" id="letter" hidden aria-label="私人生日祝福">
+      <span class="letter-star" aria-hidden="true">✦</span>
+      <p id="letter-message" tabindex="0" aria-label="生日祝福，可滚动阅读长文"></p>
+      <p class="signature">永远为你留一盏灯的，<span id="letter-from"></span></p>
+    </section>
+
+    <section class="ritual" id="ritual" aria-label="生日仪式操作">
+      <div class="mic-panel" id="mic-panel" hidden>
+        <div class="mic-panel-heading"><strong id="mic-state">正在准备麦克风</strong><button class="mic-close" id="mic-close" aria-label="关闭麦克风">×</button></div>
+        <div class="mic-meter-row"><span>声音</span><div class="mic-meter" id="mic-meter" role="meter" aria-label="麦克风声音强度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="mic-level"></i></div><span class="mic-level-label" id="mic-level-label">等待声音</span></div>
+        <div class="blow-meter-row"><span>心愿起飞</span><div class="blow-meter" id="blow-meter" role="progressbar" aria-label="吹灭蜡烛进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="blow-level"></i></div><span id="blow-percent">0%</span></div>
+        <div class="mic-settings"><label for="mic-sensitivity">灵敏度</label><select id="mic-sensitivity"><option value="gentle">灵敏 · 轻吹</option><option value="normal">标准</option><option value="steady">较稳 · 环境偏吵</option></select><button id="mic-calibrate" class="text-button" disabled>重新校准</button></div>
+      </div>
+      <div class="action-row">
+        <button class="primary-button" id="primary"><span id="primary-label">拆开为你准备的礼物</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
+        <button class="primary-button blow-button" id="microphone" aria-describedby="mic-status" hidden>吹灭蜡烛</button>
+      </div>
+      <div class="secondary-row">
+        <button class="magic-button" id="magic" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 11-11m-8-6 1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3Zm11 10 1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z"/></svg>变个魔术 · 同频共振</button>
+        <span class="resonance-note" id="resonance-note" role="status" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20S3 15 3 8.5C3 3 10 2 12 7c2-5 9-4 9 1.5C21 15 12 20 12 20Z"/></svg><span id="resonance-label">星光正在寻找同一个频率…</span></span>
+        <span class="action-hint" id="action-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 11V9a6 6 0 0 1 12 0v2M4 10H2v6h4v-6H4Zm12 0h2v6h-4v-6h2Z"/></svg>戴上耳机，把这一刻留给自己</span>
+        <button class="text-button" id="skip" hidden>快点看看生日惊喜 <span>↗</span></button>
+        <button class="hold-button hold-secondary" id="hold" aria-label="也可以长按约两秒熄灭蜡烛" hidden><span class="hold-fill" id="hold-fill"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h12a3 3 0 1 0-3-3M3 12h17M3 16h10a3 3 0 1 1-3 3"/></svg><span id="hold-label">或长按熄灭</span></button>
+        <button class="text-button" id="manual-blow" hidden>轻点帮我吹灭 <span>✧</span></button>
+        <button class="text-button" id="keepsake" hidden>收藏这一刻 <span>↗</span></button>
+      </div>
+      <p class="mic-status" id="mic-status" role="status" hidden></p>
+    </section>
+
+    <div class="interaction-tip" id="interaction-tip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5a2 2 0 0 1 4 0v7-3a2 2 0 0 1 4 0v4-1a2 2 0 0 1 4 0v4c0 4-3 6-7 6H9l-6-7a2 2 0 0 1 3-2l3 2"/></svg><span>拖动探索<span class="tip-divider">/</span>触碰星光</span></div>
+    <button class="motion-toggle" id="motion-toggle" aria-pressed="false">减少动态</button>
+  </main>
+
+  <footer class="bottom-bar">
+    <span class="footer-caption">SOMEONE IS HAPPY YOU EXIST.</span>
+    <ol class="chapters" aria-label="生日旅程进度">
+      <li class="active" data-chapter="0"><span class="chapter-dot"></span><span class="chapter-number">01</span> 专属惊喜</li>
+      <li data-chapter="1"><span class="chapter-dot"></span><span class="chapter-number">02</span> 同频共振</li>
+      <li data-chapter="2"><span class="chapter-dot"></span><span class="chapter-number">03</span> 甜蜜心意</li>
+      <li data-chapter="3"><span class="chapter-dot"></span><span class="chapter-number">04</span> 许个愿吧</li>
+      <li data-chapter="4"><span class="chapter-dot"></span><span class="chapter-number">05</span> 未完待续</li>
+    </ol>
+    <span class="footer-date">A GIFT OUTSIDE OF TIME <span>✧</span></span>
+  </footer>
+
+  <dialog id="edit-dialog" class="gift-dialog">
+    <button class="dialog-close" data-close aria-label="关闭">×</button>
+    <span class="dialog-eyebrow">WORDS THAT BELONG TO YOU</span>
+    <h2>把心意，写进星光里。</h2>
+    <p class="dialog-description">这是你们之间的小宇宙。称呼和祝福会保存在当前浏览器。</p>
+    <form id="edit-form">
+      <label for="gift-to">写给谁<span>最多 12 个字</span></label>
+      <input id="gift-to" name="to" maxlength="12" required autocomplete="off" value="欣雨">
+      <label for="gift-message">偷偷藏起来的祝福<span>最多 300 个字</span></label>
+      <textarea id="gift-message" name="message" rows="4" maxlength="300" required></textarea>
+      <label for="gift-from">你的落款</label>
+      <input id="gift-from" name="from" maxlength="24" required autocomplete="off" value="懒羊羊大王">
+      <button class="primary-button" type="submit">把这份心意收好 <span>✧</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="share-dialog" class="gift-dialog">
+    <button class="dialog-close" data-close aria-label="关闭">×</button>
+    <span class="dialog-eyebrow">A LITTLE SURPRISE TO GIVE</span>
+    <h2>把整个宇宙，送给 TA。</h2>
+    <p class="dialog-description" id="share-description"></p>
+    <input id="share-url" readonly aria-label="专属礼物链接">
+    <button class="primary-button" id="copy-link">复制专属链接 <span>↗</span></button>
+    <p class="privacy-note">链接会包含称呼、落款和祝福。只分享给你想送达的人。</p>
+  </dialog>
+
+  <dialog id="error-dialog" class="gift-dialog">
+    <span class="dialog-eyebrow">THE STARS ARE STILL HERE</span>
+    <h2>这片星光，暂时没能亮起。</h2>
+    <p class="dialog-description" id="error-description"></p>
+    <button class="primary-button" id="reload">重新打开 <span>↗</span></button>
+    <button class="text-button" id="read-letter">先读这封生日信</button>
+  </dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <noscript><div class="noscript">请启用 JavaScript，让这片星光亮起来。生日快乐，愿你始终被温柔以待。</div></noscript>
+</body>
+</html>
